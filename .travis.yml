@@ -1,23 +1,14 @@
 language: bash
-
 services:
-  - docker
-
+- docker
 env:
   global:
   - REPO=${TRAVIS_REPO_SLUG}
-
+  - secure: CCcU4fK6NoZNk4+3bNCPuy4DSOIZWhv0pTJPLMxfDHjKWKbLS6aASBoqhH7tNU4rVas/HeLqpKTORVCEE8JUS+kHW6ou6YlNUDQhjvCxmsq/zk/8ZIWmmRlacwkqi0vcfrK3kphneEK1ymuz4BvjiUNlBjxEeEbVQqaYszXmlg+9WUphKT7MjNZcGkpX02topTa0n0FZ/EHBYmU4ztAFtPZ1QoIdoeoeQsXU+gSfBkVhZgjjWkJJK5Iv/zPVWNGk6Kh0zoiT7Cph3TMo4ZFE7w+3i2f6Nu6+imqcWC5wltMowXQeXjdfelVdSR7fmRleOavyE8KFWRwSGTz5JIsZOEOQBBTCCFT0AOxPXbbQZ+vHnNk5x4TDC+6tceQaUuxBnwETQYL/32JV2B1sr1Gi6+IAoyibCjCdMpJD5+wKRvhmqXJ281k8VAdAvmDSzYTWXw7VMFhrewO8V9VW0gDg2BwVhLEuyzrDZUHv63cGrBMe0uOJVVScMRKEyU6nVkmSUCmUo0A+HndRsyu51mPrU4DtlfzxTvf+TMDiOFhIkgY46rH6dsydTWR+6XtW9iOVnmd46YCHoS10q5K6jRXM4GesjaqGw2PxoHe2dCe+5MBmfnb675AxYqPuxaB2LhE0MHhksK5TWUJHagqaDRIl2J8Y81+/SKKGZqssnoIu5AM=
+  - secure: IxmnhAg2WBpQ7ZteI3yJeEET5JxdxZBWfKVTfoyTELUzbNKtZeaqGNj+MpIt0J/FSzx3LrbO3UAYRXmDVn7QajK4E14RWFL4RoyK6DIoDMTtBpzPnpvR3dc7Q/QevzMvslwcmivMzFqkA1nybfxAIR7W9w45W5HyR6SgNrnri3TS2uqXM89JwDbUG2FETY7zE+e7w+prjMjpBArX0TdnU1p58F2bndYgcTgjSNbCmRcIKqgiXJi8kzyhHTDxxQYNSIeuwZhV0XJbz0O4H6B86whV4V6Xx4IcxekBEQjCT3rbvp1Z9NgjSDrIajgoj30z9zR/6KvhrTrjTFnNmVlVOADKRhIIK/NSrCcG40K1LnsQmJ1XTs/GBRNLd7qxKegJQmU3luQCHzVYbX/7njH2uV6ZT8MXwfRqaHw/rIsisRNtTvzMKIARwNU29K8rDEy0sCwW3ClCVm7AhVQ0pfetjHvbJs3aERb+FFJYQEci+2S19tpp1nbdr4mQ+KXX1DWQhrS2a5Fvqj9Ta0f1DmNsTmq0Bc0XKiz8bI06m7QEdGR24J4Fx4pqPRfmNiI+7jQovyE4BZbccgTEDbapgPXXLjS230elWI6rPmaT6Js6xiS9CX99esRF17r5Vf+uYdHEz2ZopLP4FPc2Kab1lqjvQql+k+zWoAlAkonKvybDOeg=
 script:
-    - docker build -t $REPO:latest .
-    #  - docker pull $REPO:latest
-    #  - docker build --cache-from $REPO:latest -t $REPO:latest .
-
+- docker build -t $REPO:latest .
 after_success:
-    - if [ -n "$TRAVIS_TAG" ]; then
-        echo "$DOCKER_PASS" | docker login -u $DOCKER_USER --password-stdin;
-        docker tag $REPO:latest $REPO:$TRAVIS_TAG;
-        docker push $REPO;
-      else
-        echo "not a tag branch, skip deploy...";
-      fi
-
+- if [ -n "$TRAVIS_TAG" ]; then echo "$DOCKER_PASS" | docker login -u $DOCKER_USER
+  --password-stdin; docker tag $REPO:latest $REPO:$TRAVIS_TAG; docker push $REPO;
+  else echo "not a tag branch, skip deploy..."; fi

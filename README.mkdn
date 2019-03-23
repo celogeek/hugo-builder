@@ -3,5 +3,5 @@
 To build your hugo site your can do:
 
 ```
-docker run -v .:/site celogeek/hugo-builder 
+docker run -v $PWD:/site celogeek/hugo-builder 
 ```

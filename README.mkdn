@@ -1,0 +1,7 @@
+# Hugo Builder
+
+To build your hugo site your can do:
+
+```
+docker run -v .:/site celogeek/hugo-builder 
+```
